@@ -21,12 +21,13 @@
 ---
 
 ## 🛠 Skills
-- Power BI  
-- Excel  
-- Data Analysis  
-- SQL
-- Python
 
+![Power BI](https://img.shields.io/badge/PowerBI-F2C811?style=flat&logo=powerbi&logoColor=black)
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat&logo=mysql&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![Excel](https://img.shields.io/badge/Excel-217346?style=flat&logo=microsoftexcel&logoColor=white)
+
+🌱 Currently learning: Machine Learning
 ---
 
 ## 📫 Connect with me
