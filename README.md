@@ -1,16 +1,19 @@
-## Hi there 👋
+# Hi, I'm Sudip 👋
 
-<!--
-**sudipkumarjena/sudipkumarjena** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+🎯 Aspiring Data Analyst | Power BI | Data Visualization  
 
-Here are some ideas to get you started:
+📊 Passionate about turning data into business insights  
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## 🚀 Projects
+- 🌍 AI Job Market Analysis (Power BI)
+- 📊 Superstore Sales Dashboard  
+
+## 🛠 Skills
+- Power BI
+- Excel
+- Data Analysis
+- SQL
+- Python
+
+## 📫 Connect with me
+- LinkedIn: www.linkedin.com/in/sudip-kumar-jena515 
