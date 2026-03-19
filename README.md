@@ -1,6 +1,6 @@
 <!-- Header Banner -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,100:1a3a5c&height=160&section=header&text=Sudip%20Kumar%20Jena&fontSize=36&fontColor=e2e8f0&fontAlignY=55&desc=Data%20Analyst&descSize=16&descAlignY=75&descColor=64a0c8" width="100%" alt="header"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,100:1a3a5c&height=140&section=header&text=Sudip%20Kumar%20Jena&fontSize=34&fontColor=e2e8f0&fontAlignY=52&desc=Data%20Analyst&descSize=15&descAlignY=70&descColor=64a0c8" width="100%" alt="header"/>
 </p>
 
 <!-- Typing SVG -->
@@ -8,9 +8,16 @@
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=15&duration=3500&pause=1200&color=64A0C8&center=true&vCenter=true&width=500&lines=Python+%C2%B7+SQL+%C2%B7+Power+BI+%C2%B7+Excel;Turning+data+into+decisions;Open+to+Data+Analyst+roles" alt="Typing SVG" />
 </p>
 
+<!-- Visitor counter + followers -->
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=sudipkumarjena&label=Profile+Views&color=0d1117&style=flat-square" alt="profile views" />
+  &nbsp;
+  <img src="https://img.shields.io/github/followers/sudipkumarjena?label=Followers&style=flat-square&color=0d1117" alt="followers" />
+</p>
+
 ---
 
-## About
+## 👨‍💻 About
 
 B.Com graduate pivoting into Data Analytics through self-directed learning, hands-on projects, and real-world simulations. I work across the full analyst stack — from cleaning raw data in Python to writing SQL queries to building interactive Power BI dashboards.
 
@@ -25,6 +32,11 @@ Currently pursuing an Advanced Certificate in Data Science & AI at UpGrad.
   "open_to"   : ["Data Analyst", "Business Analyst", "MIS Analyst"]
 }
 ```
+<!-- Snake Game Repo View -->
+
+<div align="center">
+  <img src="https://profile-readme-generator.com/assets/snake.svg" alt="Snake animation" />
+</div>
 
 ---
 
@@ -53,7 +65,7 @@ Currently pursuing an Advanced Certificate in Data Science & AI at UpGrad.
 ### 🏥 Healthcare Patient Data Analysis
 > **Python · MySQL · Power BI · DAX · Power Query**
 
-End-to-end analysis of **54,966 patient records**. Built a 3-page Power BI dashboard covering patient demographics, billing trends, and care quality KPIs. Used SQL window functions to identify admission patterns and billing anomalies.
+Cleaned and analysed **54,966 patient records** end-to-end. Built a 3-page Power BI dashboard covering patient demographics, billing trends, and care quality KPIs. Used SQL window functions to identify admission patterns and billing anomalies.
 
 [![View Repo](https://img.shields.io/badge/GitHub-View_Repo-0d1117?style=flat-square&logo=github)](https://github.com/sudipkumarjena/healthcare-patient-analysis)
 
