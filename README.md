@@ -10,7 +10,7 @@ const useTypingEffect = (text, speed = 50, delay = 0) => {
     let currentIndex = 0;
     setDisplayedText("");
 
-    const startTyping = () => {
+  const startTyping = () => {
       const interval = setInterval(() => {
         if (currentIndex < text.length) {
           setDisplayedText(prev => prev + text.charAt(currentIndex));
@@ -22,12 +22,12 @@ const useTypingEffect = (text, speed = 50, delay = 0) => {
       return interval;
     };
 
-    timeout = setTimeout(() => {
+  timeout = setTimeout(() => {
       const interval = startTyping();
       return () => clearInterval(interval);
     }, delay);
 
-    return () => clearTimeout(timeout);
+  return () => clearTimeout(timeout);
   }, [text, speed, delay]);
 
   return { displayedText };
@@ -43,40 +43,40 @@ const MatrixBackground = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
     
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%""\'#&_(),.;:?!\\|{}<>[]^~';
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%""\'#&_(),.;:?!\\|{}<>[]^~';
     const fontSize = 14;
     const columns = canvas.width / fontSize;
     const drops = Array.from({ length: columns }).fill(1);
 
-    const draw = () => {
+   const draw = () => {
       ctx.fillStyle = 'rgba(2, 6, 23, 0.05)'; // Fade effect (Slate 950)
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      ctx.fillStyle = '#06b6d4'; // Cyan color
+   ctx.fillStyle = '#06b6d4'; // Cyan color
       ctx.font = fontSize + 'px monospace';
       
-      for (let i = 0; i < drops.length; i++) {
+  for (let i = 0; i < drops.length; i++) {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
         
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+  if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
       }
     };
 
-    const interval = setInterval(draw, 33);
+  const interval = setInterval(draw, 33);
     
-    const handleResize = () => {
+  const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     
-    window.addEventListener('resize', handleResize);
+  window.addEventListener('resize', handleResize);
     return () => {
       clearInterval(interval);
       window.removeEventListener('resize', handleResize);
@@ -115,7 +115,7 @@ const InteractiveTerminal = () => {
       let output = '';
       const cmd = input.trim().toLowerCase();
       
-      switch(cmd) {
+  switch(cmd) {
         case 'help': 
           output = 'Commands: whoami, ls, cat <file>, clear, hack, github'; 
           break;
@@ -147,7 +147,7 @@ const InteractiveTerminal = () => {
           else output = `bash: ${cmd}: command not found`;
       }
 
-      setHistory([...history, { cmd: input, output }]);
+  setHistory([...history, { cmd: input, output }]);
       setInput('');
     }
   };
@@ -205,13 +205,13 @@ const ProjectCard = ({ repo }) => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    const centerX = rect.width / 2;
+  const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    const rotateX = ((y - centerY) / centerY) * -10;
+  const rotateX = ((y - centerY) / centerY) * -10;
     const rotateY = ((x - centerX) / centerX) * 10;
 
-    setStyle({
+  setStyle({
       transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
       transition: 'all 0.1s ease',
       zIndex: 10
@@ -220,7 +220,7 @@ const ProjectCard = ({ repo }) => {
 
   const handleMouseLeave = useCallback(() => {
     setStyle({
-      transform: `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,
+     transform:`perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,
       transition: 'all 0.5s ease',
       zIndex: 1
     });
@@ -240,22 +240,22 @@ const ProjectCard = ({ repo }) => {
       {/* Dynamic lighting effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-cyan-500/0 to-cyan-500/0 group-hover:from-cyan-500/10 group-hover:to-purple-500/10 transition-all duration-500 rounded-2xl pointer-events-none"></div>
       
-      <div className="flex justify-between items-start mb-4 relative z-10">
+  <div className="flex justify-between items-start mb-4 relative z-10">
         <div className="p-3 bg-slate-800 text-cyan-400 rounded-xl group-hover:bg-cyan-950 transition-colors">
           <FolderOpen size={24} />
         </div>
         <ExternalLink size={20} className="text-slate-500 group-hover:text-cyan-400 transition-colors" />
       </div>
       
-      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors relative z-10 truncate">
+  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors relative z-10 truncate">
         {repo.name}
       </h3>
       
-      <p className="text-slate-400 mb-6 text-sm line-clamp-3 min-h-[60px] relative z-10">
+  <p className="text-slate-400 mb-6 text-sm line-clamp-3 min-h-[60px] relative z-10">
         {repo.description || "No description provided. Dive into the code to see what this is about!"}
       </p>
       
-      <div className="flex items-center justify-between text-xs font-mono mt-auto pt-4 border-t border-slate-800 relative z-10">
+  <div className="flex items-center justify-between text-xs font-mono mt-auto pt-4 border-t border-slate-800 relative z-10">
         <span className="flex items-center gap-1.5 text-slate-300">
           <div className={`w-2 h-2 rounded-full ${repo.language ? 'bg-cyan-400' : 'bg-slate-500'}`}></div>
           {repo.language || 'Markdown'}
@@ -287,7 +287,7 @@ export default function App() {
           fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`)
         ]);
 
-        if (profileRes.ok && reposRes.ok) {
+  if (profileRes.ok && reposRes.ok) {
           const profileData = await profileRes.json();
           const reposData = await reposRes.json();
           setGhProfile(profileData);
@@ -300,13 +300,13 @@ export default function App() {
       }
     };
 
-    fetchGitHubData();
+  fetchGitHubData();
   }, []);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden relative">
       
-      {/* Custom CSS for Glitch and Animations */}
+  {/* Custom CSS for Glitch and Animations */}
       <style dangerouslySetInnerHTML={{__html: `
         /* Glitch Effect */
         .glitch-wrapper {
@@ -380,26 +380,26 @@ export default function App() {
           100% { clip: rect(14px, 9999px, 82px, 0); }
         }
         
-        /* Floating Avatar */
+  /* Floating Avatar */
         @keyframes float-avatar {
           0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 0 20px rgba(6, 182, 212, 0.2); }
           50% { transform: translateY(-15px) scale(1.02); box-shadow: 0 0 40px rgba(6, 182, 212, 0.5); }
         }
         .animate-float-avatar { animation: float-avatar 4s ease-in-out infinite; }
         
-        /* Fade In */
+  /* Fade In */
         @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
         
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+  .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
       `}} />
 
-      <MatrixBackground />
+  <MatrixBackground />
 
-      {/* Navbar */}
+  {/* Navbar */}
       <nav className="fixed w-full top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/50 supports-[backdrop-filter]:bg-slate-950/40">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="text-cyan-400 font-mono font-bold text-xl flex items-center gap-2 tracking-tighter hover:text-white transition-colors cursor-pointer">
@@ -412,10 +412,10 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Main Content */}
+  {/* Main Content */}
       <main className="relative z-10 pt-32 pb-20 px-6 max-w-6xl mx-auto space-y-32">
         
-        {/* Hero Section */}
+  {/* Hero Section */}
         <section id="about" className="flex flex-col items-center text-center mt-10">
           <div className="relative inline-block mb-8 group">
             <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
@@ -431,13 +431,13 @@ export default function App() {
             <div className="absolute -bottom-2 -left-6 bg-slate-800/90 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700 animate-float-avatar text-yellow-400 z-20 shadow-xl text-xs font-mono font-bold" style={{ animationDelay: '2s' }}>{'{ JS }'}</div>
           </div>
           
-          <GlitchText text={ghProfile?.name || "Sudip Kumar Jena"} />
+   <GlitchText text={ghProfile?.name || "Sudip Kumar Jena"} />
           
-          <p className="text-lg md:text-xl font-mono text-emerald-400 mb-8 h-8 max-w-2xl mx-auto">
+  <p className="text-lg md:text-xl font-mono text-emerald-400 mb-8 h-8 max-w-2xl mx-auto">
             {ghProfile?.bio || subtitleText}
           </p>
           
-          {/* Live GitHub Stats Grid */}
+  {/* Live GitHub Stats Grid */}
           {!loading && ghProfile && (
             <div className="flex gap-6 mb-12 animate-fade-in font-mono text-sm bg-slate-900/50 p-4 rounded-xl border border-slate-800 backdrop-blur-sm">
               <div className="flex flex-col items-center">
@@ -457,17 +457,17 @@ export default function App() {
             </div>
           )}
 
-          <InteractiveTerminal />
+  <InteractiveTerminal />
         </section>
 
-        {/* Live GitHub Projects Section */}
+  {/* Live GitHub Projects Section */}
         <section id="projects" className="relative">
           <div className="flex items-center gap-4 mb-12">
             <h2 className="text-3xl font-bold text-white tracking-tight">System.Repositories</h2>
             <div className="h-px bg-gradient-to-r from-cyan-500/50 to-transparent flex-1"></div>
           </div>
           
-          {loading ? (
+  {loading ? (
              <div className="flex justify-center items-center py-20 text-cyan-500">
                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500"></div>
              </div>
@@ -484,21 +484,21 @@ export default function App() {
             </div>
           )}
           
-          <div className="mt-16 text-center">
+  <div className="mt-16 text-center">
             <a href="https://github.com/sudipkumarjena?tab=repositories" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-8 py-3 bg-slate-900 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-950 hover:border-cyan-400 rounded-full font-mono transition-all shadow-[0_0_20px_-5px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.6)]">
               Explore All on GitHub <ChevronRight size={18} />
             </a>
           </div>
         </section>
 
-        {/* Contact Footer */}
+  {/* Contact Footer */}
         <section id="contact" className="border-t border-slate-800/50 pt-20 pb-10 flex flex-col items-center text-center relative z-20">
           <h2 className="text-3xl font-bold text-white mb-6">Open Connection</h2>
           <p className="text-slate-400 max-w-md mb-8">
             My inbox is currently open for new opportunities, collaborations, or just a quick chat about tech.
           </p>
           
-          <div className="flex gap-6 mb-12">
+  <div className="flex gap-6 mb-12">
             <a href="https://github.com/sudipkumarjena" target="_blank" rel="noreferrer" className="p-4 bg-slate-900 rounded-xl text-slate-400 hover:text-white hover:-translate-y-2 hover:bg-slate-800 hover:shadow-[0_10px_20px_rgba(255,255,255,0.05)] transition-all border border-slate-800">
               <Github size={28} />
             </a>
@@ -510,7 +510,7 @@ export default function App() {
             </a>
           </div>
           
-          <div className="text-slate-600 font-mono text-sm">
+   <div className="text-slate-600 font-mono text-sm">
             <p className="flex items-center justify-center gap-2">Built with <span className="text-cyan-600">React</span> & <span className="text-cyan-600">Tailwind</span></p>
             <p className="mt-2">© {new Date().getFullYear()} Sudip Kumar Jena. All systems normal.</p>
           </div>
