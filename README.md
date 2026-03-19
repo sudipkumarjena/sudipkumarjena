@@ -31,7 +31,10 @@ Currently pursuing an Advanced Certificate in Data Science & AI at UpGrad.
   "tools"     : ["Python", "SQL", "Power BI", "Excel", "MySQL"],
   "open_to"   : ["Data Analyst", "Business Analyst", "MIS Analyst"]
 }
+
 ```
+
+
 <!-- Snake Game Repo View -->
 
 <div align="center">
