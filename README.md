@@ -1,10 +1,12 @@
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,100:1a3a5c&height=160&section=header&text=Sudip%20Kumar%20Jena&fontSize=36&fontColor=e2e8f0&fontAlignY=55&desc=Data%20Analyst&descSize=16&descAlignY=75&descColor=64a0c8" width="100%"/>
+<!-- Header Banner -->
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,100:1a3a5c&height=160&section=header&text=Sudip%20Kumar%20Jena&fontSize=36&fontColor=e2e8f0&fontAlignY=55&desc=Data%20Analyst&descSize=16&descAlignY=75&descColor=64a0c8" width="100%" alt="header"/>
+</p>
 
-<div align="center">
-
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=15&duration=3500&pause=1200&color=64A0C8&center=true&vCenter=true&width=500&lines=Python+%C2%B7+SQL+%C2%B7+Power+BI+%C2%B7+Excel;Turning+data+into+decisions;Open+to+Data+Analyst+roles)](https://git.io/typing-svg)
-
-</div>
+<!-- Typing SVG -->
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=15&duration=3500&pause=1200&color=64A0C8&center=true&vCenter=true&width=500&lines=Python+%C2%B7+SQL+%C2%B7+Power+BI+%C2%B7+Excel;Turning+data+into+decisions;Open+to+Data+Analyst+roles" alt="Typing SVG" />
+</p>
 
 ---
 
@@ -14,7 +16,7 @@ B.Com graduate pivoting into Data Analytics through self-directed learning, hand
 
 Currently pursuing an Advanced Certificate in Data Science & AI at UpGrad.
 
-```python
+```json
 {
   "location"  : "Bhubaneswar, Odisha, India",
   "education" : "B.Com — Sambalpur University (2025)",
@@ -26,7 +28,7 @@ Currently pursuing an Advanced Certificate in Data Science & AI at UpGrad.
 
 ---
 
-## Skills
+## 🛠 Skills
 
 **Data Analysis & Visualisation**
 
@@ -42,40 +44,40 @@ Currently pursuing an Advanced Certificate in Data Science & AI at UpGrad.
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
-![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=flat-square&logo=scikit-learn&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat-square&logo=jupyter&logoColor=white)
 
 ---
 
-## Projects
+## 🚀 Featured Projects
 
 ### 🏥 Healthcare Patient Data Analysis
-> Python · MySQL · Power BI · DAX · Power Query
+> **Python · MySQL · Power BI · DAX · Power Query**
 
-Cleaned and analysed **54,966 patient records** end-to-end. Built a 3-page Power BI dashboard covering patient demographics, billing trends, and care quality KPIs. Used SQL window functions to identify admission patterns and billing anomalies.
+End-to-end analysis of **54,966 patient records**. Built a 3-page Power BI dashboard covering patient demographics, billing trends, and care quality KPIs. Used SQL window functions to identify admission patterns and billing anomalies.
 
-[![Repo](https://img.shields.io/badge/GitHub-View_Repo-0d1117?style=flat-square&logo=github)](https://github.com/sudipkumarjena)
+[![View Repo](https://img.shields.io/badge/GitHub-View_Repo-0d1117?style=flat-square&logo=github)](https://github.com/sudipkumarjena/healthcare-patient-analysis)
 
 ---
 
 ### 🤖 Global AI Job Market Analysis
-> Power BI · DAX · Data Modeling
+> **Power BI · DAX · Data Modeling**
 
 Analysed **71,620 job listings** across 92 countries. Surfaced a 4,136% medium-company growth trend and $151K average AI salary. Interactive slicers for experience level, company size, and work mode.
 
-[![Repo](https://img.shields.io/badge/GitHub-View_Repo-0d1117?style=flat-square&logo=github)](https://github.com/sudipkumarjena/AI-Job-Market-Analysis-PowerBI)
+[![View Repo](https://img.shields.io/badge/GitHub-View_Repo-0d1117?style=flat-square&logo=github)](https://github.com/sudipkumarjena/AI-Job-Market-Analysis-PowerBI)
 
 ---
 
 ### 🏪 Superstore Business Performance Dashboard
-> Power BI · Excel
+> **Power BI · Excel**
 
 Sales analytics across 4 report pages — regional profitability, segment intelligence, seasonal trends, and top/bottom product performance.
 
-[![Repo](https://img.shields.io/badge/GitHub-View_Repo-0d1117?style=flat-square&logo=github)](https://github.com/sudipkumarjena/superstore-sales-dashboard)
+[![View Repo](https://img.shields.io/badge/GitHub-View_Repo-0d1117?style=flat-square&logo=github)](https://github.com/sudipkumarjena/superstore-sales-dashboard)
 
 ---
 
-## Certifications
+## 📜 Certifications
 
 | Certificate | Issuer | Date |
 |---|---|---|
@@ -84,51 +86,49 @@ Sales analytics across 4 report pages — regional profitability, segment intell
 | Advanced Certificate — Data Science & AI | UpGrad | In Progress |
 | Digital Marketing | PW Skills | 2025 |
 
-> 🏆 **UpGrad B-5 Squad Data & AI Hackathon 2026** — reached the Pre-Final Round
+> 🏆 **UpGrad B-5 Squad Data & AI Hackathon 2026** — Pre-Final Round
 
 ---
 
-## GitHub Stats
+## 📊 GitHub Stats
 
-<div align="center">
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=sudipkumarjena&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=64a0c8&icon_color=64a0c8&text_color=8b949e&include_all_commits=true" height="160" alt="GitHub Stats"/>
+  &nbsp;
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=sudipkumarjena&layout=compact&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=64a0c8&text_color=8b949e&langs_count=6" height="160" alt="Top Languages"/>
+</p>
 
-<img height="160" src="https://github-readme-stats.vercel.app/api?username=sudipkumarjena&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=64a0c8&icon_color=64a0c8&text_color=8b949e&include_all_commits=true"/>
-<img height="160" src="https://github-readme-stats.vercel.app/api/top-langs/?username=sudipkumarjena&layout=compact&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=64a0c8&text_color=8b949e&langs_count=6"/>
-
-</div>
-
-<div align="center">
-
-<img src="https://github-readme-streak-stats.herokuapp.com?user=sudipkumarjena&theme=github-dark-blue&hide_border=true&background=0d1117&ring=64a0c8&fire=64a0c8&currStreakLabel=64a0c8"/>
-
-</div>
+<p align="center">
+  <img src="https://streak-stats.demolab.com?user=sudipkumarjena&theme=github-dark-blue&hide_border=true&background=0d1117&ring=64a0c8&fire=64a0c8&currStreakLabel=64a0c8" alt="GitHub Streak"/>
+</p>
 
 ---
 
-## Contribution
+## 🐍 Contribution
 
-<div align="center">
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/sudipkumarjena/sudipkumarjena/output/github-contribution-grid-snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/sudipkumarjena/sudipkumarjena/output/github-contribution-grid-snake.svg">
-  <img alt="contribution snake" src="https://raw.githubusercontent.com/sudipkumarjena/sudipkumarjena/output/github-contribution-grid-snake-dark.svg">
-</picture>
-
-</div>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sudipkumarjena/sudipkumarjena/output/github-contribution-grid-snake-dark.svg" alt="contribution snake"/>
+</p>
 
 ---
 
-## Connect
+## 🤝 Connect
 
-<div align="center">
+<p align="center">
+  <a href="https://linkedin.com/in/sudip-kumar-jena515">
+    <img src="https://img.shields.io/badge/LinkedIn-Sudip_Kumar_Jena-0077B5?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+  </a>
+  &nbsp;
+  <a href="https://github.com/sudipkumarjena">
+    <img src="https://img.shields.io/badge/GitHub-sudipkumarjena-0d1117?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
+  </a>
+  &nbsp;
+  <a href="mailto:sudip4185@gmail.com">
+    <img src="https://img.shields.io/badge/Email-sudip4185@gmail.com-c0392b?style=flat-square&logo=gmail&logoColor=white" alt="Email"/>
+  </a>
+</p>
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sudip_Kumar_Jena-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/sudip-kumar-jena515)
-&nbsp;
-[![GitHub](https://img.shields.io/badge/GitHub-sudipkumarjena-0d1117?style=flat-square&logo=github&logoColor=white)](https://github.com/sudipkumarjena)
-&nbsp;
-[![Email](https://img.shields.io/badge/Email-sudip4185@gmail.com-c0392b?style=flat-square&logo=gmail&logoColor=white)](mailto:sudip4185@gmail.com)
-
-</div>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a3a5c,100:0d1117&height=100&section=footer" width="100%"/>
+<!-- Footer Banner -->
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a3a5c,100:0d1117&height=100&section=footer" width="100%" alt="footer"/>
+</p>
