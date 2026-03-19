@@ -1,521 +1,624 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Terminal, Code, Cpu, Github, Linkedin, Mail, ChevronRight, ExternalLink, Star, GitBranch, FolderOpen, Users, BookOpen } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback } from "react";
+import {
+  Terminal, Github, Linkedin, Mail, ExternalLink, Star,
+  GitBranch, BarChart2, Database, TrendingUp, Award,
+  ChevronRight, Cpu, Send, User, Code2, X
+} from "lucide-react";
 
-// --- Custom Hooks ---
-const useTypingEffect = (text, speed = 50, delay = 0) => {
-  const [displayedText, setDisplayedText] = useState("");
-  
+/* ─── CONSTANTS ─────────────────────────────────────────── */
+const GH_USER = "sudipkumarjena";
+const LI_URL  = "https://linkedin.com/in/sudip-kumar-jena515";
+const EMAIL   = "sudip4185@gmail.com";
+
+const SKILLS = [
+  { name: "Power BI",  pct: 88, color: "#f59e0b", cat: "Visualization" },
+  { name: "Excel",     pct: 85, color: "#10b981", cat: "Analysis" },
+  { name: "SQL/MySQL", pct: 80, color: "#3b82f6", cat: "Database" },
+  { name: "Python",    pct: 72, color: "#a78bfa", cat: "Programming" },
+  { name: "Pandas",    pct: 70, color: "#a78bfa", cat: "Programming" },
+  { name: "DAX",       pct: 78, color: "#f59e0b", cat: "Visualization" },
+  { name: "Seaborn",   pct: 65, color: "#a78bfa", cat: "Programming" },
+  { name: "Scikit-learn", pct: 50, color: "#a78bfa", cat: "ML" },
+];
+
+const CERTS = [
+  { title: "GenAI Powered Data Analytics", issuer: "Tata × Forage",    date: "Dec 2025", color: "#f59e0b" },
+  { title: "Data Analytics Job Simulation", issuer: "Deloitte × Forage", date: "Dec 2025", color: "#3b82f6" },
+  { title: "Advanced Cert — Data Science & AI", issuer: "UpGrad",       date: "In Progress", color: "#10b981" },
+  { title: "Digital Marketing",             issuer: "PW Skills",        date: "2025",        color: "#a78bfa" },
+];
+
+const PROJECTS = [
+  {
+    title: "Healthcare Patient Analysis",
+    desc:  "End-to-end analysis of 54,966 patient records. Python cleaning → MySQL queries → 3-page Power BI dashboard with KPIs, billing trends & care quality metrics.",
+    tags:  ["Python","MySQL","Power BI","DAX"],
+    color: "#10b981",
+    icon:  "🏥",
+    link:  `https://github.com/${GH_USER}`,
+  },
+  {
+    title: "Global AI Job Market Dashboard",
+    desc:  "Analyzed 71,620 listings across 92 countries. Revealed 4,136% medium-company growth and $151K avg AI salary using interactive Power BI slicers.",
+    tags:  ["Power BI","DAX","Data Modeling"],
+    color: "#3b82f6",
+    icon:  "🤖",
+    link:  `https://github.com/${GH_USER}/AI-Job-Market-Analysis-PowerBI`,
+  },
+  {
+    title: "Superstore Business Dashboard",
+    desc:  "Sales analytics with regional profitability, segment intelligence, and seasonal trend analysis across 4 interactive report pages.",
+    tags:  ["Power BI","Excel","Business Intelligence"],
+    color: "#f59e0b",
+    icon:  "🏪",
+    link:  `https://github.com/${GH_USER}/superstore-sales-dashboard`,
+  },
+];
+
+/* ─── ANIMATED COUNTER ──────────────────────────────────── */
+function Counter({ end, duration = 1200 }) {
+  const [val, setVal] = useState(0);
+  const started = useRef(false);
+  const ref = useRef(null);
   useEffect(() => {
-    let timeout;
-    let currentIndex = 0;
-    setDisplayedText("");
-
-  const startTyping = () => {
-      const interval = setInterval(() => {
-        if (currentIndex < text.length) {
-          setDisplayedText(prev => prev + text.charAt(currentIndex));
-          currentIndex++;
-        } else {
-          clearInterval(interval);
-        }
-      }, speed);
-      return interval;
-    };
-
-  timeout = setTimeout(() => {
-      const interval = startTyping();
-      return () => clearInterval(interval);
-    }, delay);
-
-  return () => clearTimeout(timeout);
-  }, [text, speed, delay]);
-
-  return { displayedText };
-};
-
-// --- Components ---
-
-// Matrix / Tech Particle Background
-const MatrixBackground = () => {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-    
-  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%""\'#&_(),.;:?!\\|{}<>[]^~';
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array.from({ length: columns }).fill(1);
-
-   const draw = () => {
-      ctx.fillStyle = 'rgba(2, 6, 23, 0.05)'; // Fade effect (Slate 950)
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-   ctx.fillStyle = '#06b6d4'; // Cyan color
-      ctx.font = fontSize + 'px monospace';
-      
-  for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        
-  if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !started.current) {
+        started.current = true;
+        const t0 = performance.now();
+        const tick = (now) => {
+          const p = Math.min((now - t0) / duration, 1);
+          setVal(Math.floor(p * end));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
       }
-    };
+    });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [end, duration]);
+  return <span ref={ref}>{val}</span>;
+}
 
-  const interval = setInterval(draw, 33);
-    
-  const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+/* ─── DATA PARTICLE BACKGROUND ──────────────────────────── */
+function DataBackground() {
+  const canvas = useRef(null);
+  useEffect(() => {
+    const c = canvas.current;
+    const ctx = c.getContext("2d");
+    const resize = () => { c.width = c.offsetWidth; c.height = c.offsetHeight; };
+    resize();
+    window.addEventListener("resize", resize);
+    const pts = Array.from({ length: 60 }, () => ({
+      x: Math.random() * c.width, y: Math.random() * c.height,
+      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 2 + 1,
+      color: ["#f59e0b44","#3b82f644","#10b98144","#a78bfa44"][Math.floor(Math.random()*4)],
+    }));
+    let raf;
+    const draw = () => {
+      ctx.clearRect(0, 0, c.width, c.height);
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > c.width) p.vx *= -1;
+        if (p.y < 0 || p.y > c.height) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+      pts.forEach((a, i) => pts.slice(i + 1).forEach(b => {
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 120) {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(148,163,184,${0.08 * (1 - d / 120)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }));
+      raf = requestAnimationFrame(draw);
     };
-    
-  window.addEventListener('resize', handleResize);
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('resize', handleResize);
-    };
+    draw();
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
   }, []);
+  return <canvas ref={canvas} style={{ position:"absolute",inset:0,width:"100%",height:"100%",pointerEvents:"none" }} />;
+}
 
-  return <canvas ref={canvasRef} className="fixed inset-0 z-0 opacity-20 pointer-events-none" />;
-};
-
-// Glitch Text Component
-const GlitchText = ({ text }) => {
+/* ─── SKILL BAR ─────────────────────────────────────────── */
+function SkillBar({ name, pct, color, delay = 0 }) {
+  const [w, setW] = useState(0);
+  const ref = useRef(null);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setTimeout(() => setW(pct), delay); obs.disconnect(); }
+    });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [pct, delay]);
   return (
-    <h1 className="glitch-wrapper text-5xl md:text-7xl font-extrabold text-white mb-4 tracking-tight" data-text={text}>
-      {text}
-    </h1>
-  );
-};
-
-// Advanced Terminal
-const InteractiveTerminal = () => {
-  const [history, setHistory] = useState([
-    { cmd: 'system_init', output: 'Booting SudipOS kernel v2.4.1...' },
-    { cmd: 'ls -la', output: 'drwxr-xr-x  about.txt\ndrwxr-xr-x  skills.json\ndrwxr-xr-x  projects/' }
-  ]);
-  const [input, setInput] = useState('');
-  const endOfTerminalRef = useRef(null);
-
-  const scrollToBottom = () => {
-    endOfTerminalRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => scrollToBottom(), [history]);
-
-  const handleCommand = (e) => {
-    if (e.key === 'Enter' && input.trim() !== '') {
-      let output = '';
-      const cmd = input.trim().toLowerCase();
-      
-  switch(cmd) {
-        case 'help': 
-          output = 'Commands: whoami, ls, cat <file>, clear, hack, github'; 
-          break;
-        case 'whoami': 
-          output = 'Sudip Kumar Jena - Engineer, Innovator, Code Weaver.'; 
-          break;
-        case 'ls':
-        case 'ls -la':
-          output = 'about.txt   skills.json   resume.pdf   projects/'; 
-          break;
-        case 'cat about.txt':
-          output = 'Passionate developer building scalable apps and exploring cybernetics.';
-          break;
-        case 'cat skills.json':
-          output = '{\n  "frontend": ["React", "Tailwind", "Next.js"],\n  "backend": ["Node", "Python", "SQL"],\n  "status": "Learning every day"\n}';
-          break;
-        case 'hack':
-          output = 'Accessing mainframe... \nBypassing security protocols... \nAccess GRANTED. Just kidding, I am an ethical dev! 🚀';
-          break;
-        case 'clear': 
-          setHistory([]); setInput(''); return;
-        case 'github': 
-          output = 'Redirecting to GitHub...'; 
-          window.open('https://github.com/sudipkumarjena', '_blank'); 
-          break;
-        default: 
-          if(cmd.startsWith('cat ')) output = `cat: ${cmd.substring(4)}: No such file or directory`;
-          else if(cmd.startsWith('echo ')) output = cmd.substring(5);
-          else output = `bash: ${cmd}: command not found`;
-      }
-
-  setHistory([...history, { cmd: input, output }]);
-      setInput('');
-    }
-  };
-
-  return (
-    <div className="w-full max-w-2xl mx-auto bg-slate-900/90 backdrop-blur-xl rounded-xl overflow-hidden border border-slate-700 shadow-[0_0_40px_-10px_rgba(6,182,212,0.3)] mt-12 transition-transform hover:-translate-y-1 duration-300 relative z-20">
-      <div className="bg-slate-950 px-4 py-3 flex items-center justify-between border-b border-slate-800">
-        <div className="flex gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors cursor-pointer"></div>
-          <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors cursor-pointer"></div>
-          <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 transition-colors cursor-pointer"></div>
-        </div>
-        <span className="text-xs text-slate-500 font-mono">root@sudip-machine:~</span>
-        <div className="w-12"></div> {/* Spacer for centering */}
+    <div ref={ref} style={{ marginBottom:14 }}>
+      <div style={{ display:"flex", justifyContent:"space-between", marginBottom:5 }}>
+        <span style={{ fontSize:13, color:"#94a3b8", fontFamily:"'Fira Code',monospace" }}>{name}</span>
+        <span style={{ fontSize:12, color, fontFamily:"'Fira Code',monospace", fontWeight:600 }}>{pct}%</span>
       </div>
-      <div className="p-5 font-mono text-sm h-72 overflow-y-auto text-slate-300 flex flex-col gap-3 custom-scrollbar">
-        <div className="text-cyan-400 mb-2 font-bold">Type 'help' to see available commands.</div>
-        {history.map((item, i) => (
-          <div key={i} className="animate-fade-in">
-            <div className="flex items-center text-emerald-400">
-              <span className="mr-2 text-pink-500">λ</span>
-              <span className="text-cyan-400 mr-2">~</span>
-              <span className="text-white">{item.cmd}</span>
-            </div>
-            <pre className="text-slate-400 mt-1 whitespace-pre-wrap font-sans text-sm">{item.output}</pre>
-          </div>
-        ))}
-        <div className="flex items-center text-emerald-400 mt-1">
-          <span className="mr-2 text-pink-500 animate-pulse">λ</span>
-          <span className="text-cyan-400 mr-2">~</span>
-          <input 
-            type="text" 
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleCommand}
-            className="bg-transparent border-none outline-none text-white flex-1 caret-cyan-500"
-            autoFocus
-            spellCheck="false"
-          />
-        </div>
-        <div ref={endOfTerminalRef} />
+      <div style={{ background:"#1e293b", borderRadius:4, height:6, overflow:"hidden" }}>
+        <div style={{
+          width: `${w}%`, height:"100%", borderRadius:4,
+          background: `linear-gradient(90deg, ${color}99, ${color})`,
+          transition:"width 1.2s cubic-bezier(0.4,0,0.2,1)",
+          boxShadow: `0 0 8px ${color}66`,
+        }} />
       </div>
     </div>
   );
-};
+}
 
-// 3D Tilt Project Card
-const ProjectCard = ({ repo }) => {
-  const cardRef = useRef(null);
-  const [style, setStyle] = useState({});
+/* ─── AI TERMINAL ────────────────────────────────────────── */
+function AITerminal() {
+  const [msgs, setMsgs] = useState([
+    { role:"assistant", content:"Hi! I'm Sudip's AI assistant. Ask me anything about his skills, projects, or experience. Try: 'What projects has Sudip built?' or 'What tools does he know?'" }
+  ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const bottomRef = useRef(null);
+  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior:"smooth" }); }, [msgs]);
 
-  const handleMouseMove = useCallback((e) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-  const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-  const rotateX = ((y - centerY) / centerY) * -10;
-    const rotateY = ((x - centerX) / centerX) * 10;
+  const send = async () => {
+    if (!input.trim() || loading) return;
+    const userMsg = input.trim();
+    setInput("");
+    setMsgs(m => [...m, { role:"user", content: userMsg }]);
+    setLoading(true);
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({
+          model:"claude-sonnet-4-20250514",
+          max_tokens:1000,
+          system:`You are a concise, friendly AI portfolio assistant for Sudip Kumar Jena — an aspiring Data Analyst from Bhubaneswar, Odisha, India. Answer questions about him in 2-4 sentences max. Keep it professional and enthusiastic.
 
-  setStyle({
-      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
-      transition: 'all 0.1s ease',
-      zIndex: 10
-    });
-  }, []);
+Key facts:
+- B.Com graduate (Sambalpur University, 2025)
+- Studying Advanced Data Science & AI at UpGrad
+- Skills: Python, Pandas, NumPy, SQL, MySQL, Power BI, Excel, DAX, Matplotlib, Seaborn, Scikit-learn (basic ML)
+- Projects: Healthcare Patient Analysis (54,966 records, Python+MySQL+Power BI), Global AI Job Market Dashboard (71,620 jobs, 92 countries), Superstore Business Dashboard
+- Certifications: Tata GenAI Powered Data Analytics (Forage, Dec 2025), Deloitte Data Analytics (Forage, Dec 2025)
+- Hackathon: UpGrad B-5 Squad — reached Pre-Final Round of Data & AI Hackathon 2026
+- GitHub: github.com/sudipkumarjena
+- LinkedIn: linkedin.com/in/sudip-kumar-jena515
+- Open to: Data Analyst, Business Analyst, MIS Analyst roles`,
+          messages: [...msgs, { role:"user", content: userMsg }].map(m => ({ role:m.role, content:m.content }))
+        })
+      });
+      const data = await res.json();
+      const text = data.content?.[0]?.text || "Sorry, I couldn't fetch a response.";
+      setMsgs(m => [...m, { role:"assistant", content: text }]);
+    } catch {
+      setMsgs(m => [...m, { role:"assistant", content:"Connection error. Please try again." }]);
+    }
+    setLoading(false);
+  };
 
-  const handleMouseLeave = useCallback(() => {
-    setStyle({
-     transform:`perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,
-      transition: 'all 0.5s ease',
-      zIndex: 1
-    });
-  }, []);
+  if (!open) return (
+    <button onClick={() => setOpen(true)} style={{
+      position:"fixed", bottom:28, right:28, zIndex:100,
+      background:"linear-gradient(135deg,#f59e0b,#d97706)",
+      border:"none", borderRadius:"50%", width:58, height:58,
+      display:"flex", alignItems:"center", justifyContent:"center",
+      cursor:"pointer", boxShadow:"0 0 24px #f59e0b66",
+      animation:"pulse-btn 2s infinite"
+    }}>
+      <Cpu size={26} color="#0a0e1a" />
+    </button>
+  );
 
   return (
-    <a 
-      href={repo.html_url} 
-      target="_blank" 
-      rel="noreferrer"
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={style}
-      className="block relative bg-slate-900/60 backdrop-blur-md border border-slate-700 p-6 rounded-2xl cursor-pointer shadow-lg group"
-    >
-      {/* Dynamic lighting effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-cyan-500/0 to-cyan-500/0 group-hover:from-cyan-500/10 group-hover:to-purple-500/10 transition-all duration-500 rounded-2xl pointer-events-none"></div>
-      
-  <div className="flex justify-between items-start mb-4 relative z-10">
-        <div className="p-3 bg-slate-800 text-cyan-400 rounded-xl group-hover:bg-cyan-950 transition-colors">
-          <FolderOpen size={24} />
+    <div style={{
+      position:"fixed", bottom:28, right:28, zIndex:100,
+      width:360, background:"#0f172a",
+      border:"1px solid #f59e0b33", borderRadius:16,
+      boxShadow:"0 0 40px #f59e0b22, 0 20px 60px #00000088",
+      display:"flex", flexDirection:"column", overflow:"hidden",
+    }}>
+      <div style={{ background:"#1e293b", padding:"12px 16px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+          <div style={{ width:8, height:8, borderRadius:"50%", background:"#10b981", boxShadow:"0 0 6px #10b981" }} />
+          <span style={{ fontFamily:"'Fira Code',monospace", fontSize:13, color:"#94a3b8" }}>sudip.ai_assistant</span>
         </div>
-        <ExternalLink size={20} className="text-slate-500 group-hover:text-cyan-400 transition-colors" />
+        <button onClick={() => setOpen(false)} style={{ background:"none", border:"none", cursor:"pointer", color:"#64748b" }}>
+          <X size={16} />
+        </button>
       </div>
-      
-  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors relative z-10 truncate">
-        {repo.name}
-      </h3>
-      
-  <p className="text-slate-400 mb-6 text-sm line-clamp-3 min-h-[60px] relative z-10">
-        {repo.description || "No description provided. Dive into the code to see what this is about!"}
-      </p>
-      
-  <div className="flex items-center justify-between text-xs font-mono mt-auto pt-4 border-t border-slate-800 relative z-10">
-        <span className="flex items-center gap-1.5 text-slate-300">
-          <div className={`w-2 h-2 rounded-full ${repo.language ? 'bg-cyan-400' : 'bg-slate-500'}`}></div>
-          {repo.language || 'Markdown'}
-        </span>
-        <div className="flex gap-3 text-slate-400">
-          <span className="flex items-center gap-1 hover:text-yellow-400 transition-colors"><Star size={14} /> {repo.stargazers_count}</span>
-          <span className="flex items-center gap-1 hover:text-emerald-400 transition-colors"><GitBranch size={14} /> {repo.forks_count}</span>
-        </div>
+      <div style={{ height:300, overflowY:"auto", padding:"16px", display:"flex", flexDirection:"column", gap:12 }}>
+        {msgs.map((m, i) => (
+          <div key={i} style={{
+            alignSelf: m.role === "user" ? "flex-end" : "flex-start",
+            maxWidth:"85%",
+            background: m.role === "user" ? "linear-gradient(135deg,#f59e0b,#d97706)" : "#1e293b",
+            color: m.role === "user" ? "#0a0e1a" : "#cbd5e1",
+            padding:"10px 14px", borderRadius:12,
+            fontSize:13, lineHeight:1.6,
+            border: m.role === "assistant" ? "1px solid #334155" : "none",
+          }}>
+            {m.role === "assistant" && <span style={{ color:"#f59e0b", fontFamily:"'Fira Code',monospace", fontSize:11, display:"block", marginBottom:4 }}>⚡ AI</span>}
+            {m.content}
+          </div>
+        ))}
+        {loading && (
+          <div style={{ alignSelf:"flex-start", background:"#1e293b", border:"1px solid #334155", padding:"10px 14px", borderRadius:12 }}>
+            <span style={{ color:"#f59e0b", fontFamily:"'Fira Code',monospace", fontSize:11, display:"block", marginBottom:4 }}>⚡ AI</span>
+            <span style={{ color:"#64748b", fontSize:13 }}>thinking...</span>
+          </div>
+        )}
+        <div ref={bottomRef} />
+      </div>
+      <div style={{ padding:"12px 16px", borderTop:"1px solid #1e293b", display:"flex", gap:8 }}>
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && send()}
+          placeholder="Ask about Sudip..."
+          style={{
+            flex:1, background:"#1e293b", border:"1px solid #334155",
+            borderRadius:8, padding:"8px 12px", color:"#e2e8f0",
+            fontFamily:"'Fira Code',monospace", fontSize:13, outline:"none",
+          }}
+        />
+        <button onClick={send} disabled={loading} style={{
+          background: loading ? "#334155" : "linear-gradient(135deg,#f59e0b,#d97706)",
+          border:"none", borderRadius:8, padding:"8px 12px",
+          cursor: loading ? "not-allowed" : "pointer",
+        }}>
+          <Send size={16} color={loading ? "#64748b" : "#0a0e1a"} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── PROJECT CARD ───────────────────────────────────────── */
+function ProjectCard({ p, i }) {
+  const [hov, setHov] = useState(false);
+  return (
+    <a href={p.link} target="_blank" rel="noreferrer"
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      style={{
+        display:"block", background:"#0f172a",
+        border:`1px solid ${hov ? p.color+"66" : "#1e293b"}`,
+        borderRadius:16, padding:24, textDecoration:"none",
+        transition:"all 0.3s ease",
+        transform: hov ? "translateY(-6px)" : "translateY(0)",
+        boxShadow: hov ? `0 16px 40px ${p.color}22` : "0 2px 12px #00000033",
+      }}>
+      <div style={{ fontSize:32, marginBottom:12 }}>{p.icon}</div>
+      <h3 style={{ color:"#f1f5f9", fontSize:17, fontWeight:700, marginBottom:10, fontFamily:"'Syne',sans-serif" }}>{p.title}</h3>
+      <p style={{ color:"#64748b", fontSize:13, lineHeight:1.7, marginBottom:16 }}>{p.desc}</p>
+      <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginBottom:16 }}>
+        {p.tags.map(t => (
+          <span key={t} style={{
+            background:`${p.color}18`, color:p.color,
+            padding:"3px 10px", borderRadius:20, fontSize:11,
+            fontFamily:"'Fira Code',monospace",
+            border:`1px solid ${p.color}33`,
+          }}>{t}</span>
+        ))}
+      </div>
+      <div style={{ display:"flex", alignItems:"center", gap:6, color: hov ? p.color : "#475569", fontSize:13, transition:"color 0.3s" }}>
+        <ExternalLink size={14}/><span style={{ fontFamily:"'Fira Code',monospace" }}>View on GitHub</span>
       </div>
     </a>
   );
-};
+}
 
-// --- Main App ---
+/* ─── CERT CARD ──────────────────────────────────────────── */
+function CertCard({ c }) {
+  return (
+    <div style={{
+      background:"#0f172a", border:`1px solid ${c.color}33`,
+      borderRadius:12, padding:"18px 20px",
+      borderLeft:`3px solid ${c.color}`,
+    }}>
+      <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", gap:8 }}>
+        <div>
+          <p style={{ color:"#f1f5f9", fontSize:14, fontWeight:600, marginBottom:4 }}>{c.title}</p>
+          <p style={{ color:"#64748b", fontSize:12 }}>{c.issuer}</p>
+        </div>
+        <span style={{
+          background:`${c.color}18`, color:c.color, fontSize:11,
+          padding:"3px 10px", borderRadius:20, whiteSpace:"nowrap",
+          fontFamily:"'Fira Code',monospace", flexShrink:0,
+          border:`1px solid ${c.color}33`,
+        }}>{c.date}</span>
+      </div>
+    </div>
+  );
+}
+
+/* ─── MAIN APP ───────────────────────────────────────────── */
 export default function App() {
-  const [ghProfile, setGhProfile] = useState(null);
-  const [ghRepos, setGhRepos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [gh, setGh] = useState(null);
+  const [activeSkillCat, setActiveSkillCat] = useState("All");
 
-  const { displayedText: subtitleText } = useTypingEffect("> INITIALIZING PROFILE... FETCHING LIVE GITHUB DATA_", 40, 500);
-
-  // Fetch Live GitHub Data
   useEffect(() => {
-    const fetchGitHubData = async () => {
-      try {
-        const username = 'sudipkumarjena';
-        const [profileRes, reposRes] = await Promise.all([
-          fetch(`https://api.github.com/users/${username}`),
-          fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`)
-        ]);
-
-  if (profileRes.ok && reposRes.ok) {
-          const profileData = await profileRes.json();
-          const reposData = await reposRes.json();
-          setGhProfile(profileData);
-          setGhRepos(reposData.filter(repo => !repo.fork)); // Filter out forks if preferred
-        }
-      } catch (error) {
-        console.error("Error fetching GitHub data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-  fetchGitHubData();
+    fetch(`https://api.github.com/users/${GH_USER}`)
+      .then(r => r.json()).then(setGh).catch(() => {});
   }, []);
 
+  const cats = ["All", "Visualization", "Database", "Programming", "ML"];
+  const filteredSkills = activeSkillCat === "All" ? SKILLS : SKILLS.filter(s => s.cat === activeSkillCat);
+
+  const S = {
+    page: { minHeight:"100vh", background:"#020817", color:"#cbd5e1", fontFamily:"'DM Sans',sans-serif", overflowX:"hidden" },
+    nav: {
+      position:"fixed", top:0, left:0, right:0, zIndex:50,
+      background:"rgba(2,8,23,0.85)", backdropFilter:"blur(12px)",
+      borderBottom:"1px solid #1e293b", padding:"0 32px",
+      display:"flex", alignItems:"center", justifyContent:"space-between", height:64,
+    },
+    logo: { fontFamily:"'Fira Code',monospace", color:"#f59e0b", fontSize:18, fontWeight:700, letterSpacing:-0.5 },
+    navLinks: { display:"flex", gap:32 },
+    navLink: { color:"#64748b", fontSize:14, textDecoration:"none", transition:"color 0.2s", cursor:"pointer" },
+    hero: {
+      minHeight:"100vh", display:"flex", flexDirection:"column",
+      alignItems:"center", justifyContent:"center",
+      padding:"100px 24px 60px", textAlign:"center", position:"relative",
+    },
+    tag: {
+      display:"inline-flex", alignItems:"center", gap:6,
+      background:"#f59e0b18", border:"1px solid #f59e0b44",
+      color:"#f59e0b", padding:"6px 16px", borderRadius:20,
+      fontFamily:"'Fira Code',monospace", fontSize:12, marginBottom:24,
+    },
+    h1: { fontFamily:"'Syne',sans-serif", fontSize:"clamp(40px,7vw,80px)", fontWeight:800, color:"#f8fafc", lineHeight:1.05, letterSpacing:-2, marginBottom:20 },
+    accent: { background:"linear-gradient(90deg,#f59e0b,#10b981)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" },
+    subtitle: { color:"#64748b", fontSize:"clamp(15px,2vw,18px)", maxWidth:560, lineHeight:1.8, marginBottom:40 },
+    statPill: {
+      display:"flex", gap:32, background:"#0f172a",
+      border:"1px solid #1e293b", borderRadius:16, padding:"20px 36px",
+      marginBottom:36,
+    },
+    stat: { textAlign:"center" },
+    statNum: { fontSize:28, fontWeight:800, fontFamily:"'Syne',sans-serif", color:"#f8fafc" },
+    statLbl: { fontSize:12, color:"#475569", fontFamily:"'Fira Code',monospace", marginTop:2 },
+    btnRow: { display:"flex", gap:12, flexWrap:"wrap", justifyContent:"center" },
+    btnPrimary: {
+      display:"inline-flex", alignItems:"center", gap:8,
+      background:"linear-gradient(135deg,#f59e0b,#d97706)",
+      color:"#0a0e1a", padding:"12px 28px", borderRadius:10,
+      fontWeight:700, fontSize:14, textDecoration:"none", border:"none", cursor:"pointer",
+    },
+    btnOutline: {
+      display:"inline-flex", alignItems:"center", gap:8,
+      background:"transparent", color:"#94a3b8",
+      border:"1px solid #334155", padding:"12px 24px", borderRadius:10,
+      fontSize:14, textDecoration:"none", cursor:"pointer",
+      transition:"all 0.2s",
+    },
+    section: { maxWidth:1100, margin:"0 auto", padding:"80px 24px" },
+    sectionHead: { marginBottom:48 },
+    sectionLabel: { fontFamily:"'Fira Code',monospace", fontSize:12, color:"#f59e0b", textTransform:"uppercase", letterSpacing:3, marginBottom:10 },
+    sectionTitle: { fontFamily:"'Syne',sans-serif", fontSize:"clamp(28px,4vw,44px)", fontWeight:800, color:"#f8fafc", letterSpacing:-1 },
+    grid3: { display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))", gap:20 },
+    grid2: { display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))", gap:16 },
+    filterRow: { display:"flex", gap:8, flexWrap:"wrap", marginBottom:32 },
+    filterBtn: (active) => ({
+      padding:"6px 18px", borderRadius:20, fontSize:13, cursor:"pointer",
+      fontFamily:"'Fira Code',monospace", border:"1px solid",
+      background: active ? "#f59e0b" : "transparent",
+      color: active ? "#0a0e1a" : "#64748b",
+      borderColor: active ? "#f59e0b" : "#334155",
+      transition:"all 0.2s",
+    }),
+    divider: { maxWidth:1100, margin:"0 auto", borderTop:"1px solid #1e293b" },
+    footer: {
+      textAlign:"center", padding:"40px 24px",
+      fontFamily:"'Fira Code',monospace", fontSize:13, color:"#334155",
+    },
+    socialRow: { display:"flex", gap:16, justifyContent:"center", marginBottom:20 },
+    socialBtn: {
+      display:"flex", alignItems:"center", justifyContent:"center",
+      width:46, height:46, borderRadius:12, border:"1px solid #1e293b",
+      background:"#0f172a", color:"#64748b",
+      textDecoration:"none", transition:"all 0.2s",
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden relative">
-      
-  {/* Custom CSS for Glitch and Animations */}
-      <style dangerouslySetInnerHTML={{__html: `
-        /* Glitch Effect */
-        .glitch-wrapper {
-          position: relative;
-        }
-        .glitch-wrapper::before, .glitch-wrapper::after {
-          content: attr(data-text);
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          opacity: 0.8;
-        }
-        .glitch-wrapper::before {
-          left: 2px;
-          text-shadow: -2px 0 #ff00c1;
-          clip: rect(44px, 450px, 56px, 0);
-          animation: glitch-anim 5s infinite linear alternate-reverse;
-        }
-        .glitch-wrapper::after {
-          left: -2px;
-          text-shadow: -2px 0 #00fff9;
-          clip: rect(44px, 450px, 56px, 0);
-          animation: glitch-anim2 5s infinite linear alternate-reverse;
-        }
-        @keyframes glitch-anim {
-          0% { clip: rect(10px, 9999px, 86px, 0); }
-          5% { clip: rect(61px, 9999px, 89px, 0); }
-          10% { clip: rect(81px, 9999px, 26px, 0); }
-          15% { clip: rect(20px, 9999px, 7px, 0); }
-          20% { clip: rect(31px, 9999px, 42px, 0); }
-          25% { clip: rect(4px, 9999px, 58px, 0); }
-          30% { clip: rect(41px, 9999px, 67px, 0); }
-          35% { clip: rect(82px, 9999px, 53px, 0); }
-          40% { clip: rect(74px, 9999px, 78px, 0); }
-          45% { clip: rect(86px, 9999px, 14px, 0); }
-          50% { clip: rect(78px, 9999px, 75px, 0); }
-          55% { clip: rect(13px, 9999px, 1px, 0); }
-          60% { clip: rect(57px, 9999px, 83px, 0); }
-          65% { clip: rect(67px, 9999px, 70px, 0); }
-          70% { clip: rect(68px, 9999px, 3px, 0); }
-          75% { clip: rect(80px, 9999px, 2px, 0); }
-          80% { clip: rect(89px, 9999px, 63px, 0); }
-          85% { clip: rect(98px, 9999px, 96px, 0); }
-          90% { clip: rect(6px, 9999px, 22px, 0); }
-          95% { clip: rect(70px, 9999px, 49px, 0); }
-          100% { clip: rect(80px, 9999px, 61px, 0); }
-        }
-        @keyframes glitch-anim2 {
-          0% { clip: rect(89px, 9999px, 31px, 0); }
-          5% { clip: rect(68px, 9999px, 12px, 0); }
-          10% { clip: rect(25px, 9999px, 80px, 0); }
-          15% { clip: rect(71px, 9999px, 39px, 0); }
-          20% { clip: rect(3px, 9999px, 54px, 0); }
-          25% { clip: rect(48px, 9999px, 10px, 0); }
-          30% { clip: rect(69px, 9999px, 63px, 0); }
-          35% { clip: rect(4px, 9999px, 65px, 0); }
-          40% { clip: rect(9px, 9999px, 59px, 0); }
-          45% { clip: rect(21px, 9999px, 1px, 0); }
-          50% { clip: rect(16px, 9999px, 94px, 0); }
-          55% { clip: rect(33px, 9999px, 5px, 0); }
-          60% { clip: rect(41px, 9999px, 29px, 0); }
-          65% { clip: rect(66px, 9999px, 6px, 0); }
-          70% { clip: rect(11px, 9999px, 47px, 0); }
-          75% { clip: rect(85px, 9999px, 66px, 0); }
-          80% { clip: rect(30px, 9999px, 68px, 0); }
-          85% { clip: rect(79px, 9999px, 13px, 0); }
-          90% { clip: rect(50px, 9999px, 41px, 0); }
-          95% { clip: rect(56px, 9999px, 73px, 0); }
-          100% { clip: rect(14px, 9999px, 82px, 0); }
-        }
-        
-  /* Floating Avatar */
-        @keyframes float-avatar {
-          0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 0 20px rgba(6, 182, 212, 0.2); }
-          50% { transform: translateY(-15px) scale(1.02); box-shadow: 0 0 40px rgba(6, 182, 212, 0.5); }
-        }
-        .animate-float-avatar { animation: float-avatar 4s ease-in-out infinite; }
-        
-  /* Fade In */
-        @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
-        
-  .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
-      `}} />
+    <div style={S.page}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&family=Fira+Code:wght@400;600&display=swap');
+        * { box-sizing:border-box; margin:0; padding:0; }
+        ::-webkit-scrollbar { width:6px; }
+        ::-webkit-scrollbar-track { background:#020817; }
+        ::-webkit-scrollbar-thumb { background:#1e293b; border-radius:4px; }
+        @keyframes pulse-btn { 0%,100% { box-shadow:0 0 24px #f59e0b55; } 50% { box-shadow:0 0 40px #f59e0b99; } }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+        .fade-up { animation: fadeUp 0.7s ease both; }
+        .avatar-float { animation: float 4s ease-in-out infinite; }
+        a:hover .social-icon { color: #f59e0b !important; border-color: #f59e0b44 !important; }
+      `}</style>
 
-  <MatrixBackground />
-
-  {/* Navbar */}
-      <nav className="fixed w-full top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/50 supports-[backdrop-filter]:bg-slate-950/40">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="text-cyan-400 font-mono font-bold text-xl flex items-center gap-2 tracking-tighter hover:text-white transition-colors cursor-pointer">
-            <Terminal size={24} />
-            <span>SUDIP.init()</span>
-          </div>
-          <a href="https://github.com/sudipkumarjena" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-4 py-2 bg-slate-800/80 hover:bg-cyan-500 hover:text-slate-950 text-white rounded-lg border border-slate-700 hover:border-cyan-500 transition-all text-sm font-bold shadow-lg">
-            <Github size={16} /> GitHub Profile
-          </a>
+      {/* NAV */}
+      <nav style={S.nav}>
+        <span style={S.logo}>⟨ sudip.data ⟩</span>
+        <div style={S.navLinks}>
+          {["About","Skills","Projects","Certs","Contact"].map(l => (
+            <a key={l} href={`#${l.toLowerCase()}`} style={S.navLink}
+              onMouseEnter={e => e.target.style.color="#f59e0b"}
+              onMouseLeave={e => e.target.style.color="#64748b"}>
+              {l}
+            </a>
+          ))}
         </div>
+        <a href={`https://github.com/${GH_USER}`} target="_blank" rel="noreferrer"
+          style={{ ...S.btnPrimary, padding:"8px 20px", fontSize:13 }}>
+          <Github size={15}/> GitHub
+        </a>
       </nav>
 
-  {/* Main Content */}
-      <main className="relative z-10 pt-32 pb-20 px-6 max-w-6xl mx-auto space-y-32">
-        
-  {/* Hero Section */}
-        <section id="about" className="flex flex-col items-center text-center mt-10">
-          <div className="relative inline-block mb-8 group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
-            <div className="w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-slate-800 overflow-hidden relative z-10 animate-float-avatar bg-slate-900 flex items-center justify-center p-1">
-               {ghProfile?.avatar_url ? (
-                 <img src={ghProfile.avatar_url} alt="Profile" className="w-full h-full rounded-full object-cover" />
-               ) : (
-                 <Cpu size={64} className="text-cyan-400 opacity-80" />
-               )}
-            </div>
-            {/* Tech Badges */}
-            <div className="absolute -top-4 -right-6 bg-slate-800/90 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700 animate-float-avatar text-cyan-400 z-20 shadow-xl text-xs font-mono font-bold" style={{ animationDelay: '1s' }}>{'<React />'}</div>
-            <div className="absolute -bottom-2 -left-6 bg-slate-800/90 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700 animate-float-avatar text-yellow-400 z-20 shadow-xl text-xs font-mono font-bold" style={{ animationDelay: '2s' }}>{'{ JS }'}</div>
+      {/* HERO */}
+      <section id="about" style={S.hero}>
+        <div style={{ position:"absolute",inset:0,overflow:"hidden" }}><DataBackground /></div>
+        <div style={{ position:"relative", zIndex:2, display:"flex", flexDirection:"column", alignItems:"center" }}>
+          {/* Avatar */}
+          <div className="avatar-float" style={{
+            width:110, height:110, borderRadius:"50%", overflow:"hidden",
+            border:"3px solid #f59e0b44", marginBottom:28,
+            boxShadow:"0 0 32px #f59e0b33",
+            background:"#1e293b", display:"flex", alignItems:"center", justifyContent:"center",
+          }}>
+            {gh?.avatar_url
+              ? <img src={gh.avatar_url} alt="Sudip" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
+              : <User size={48} color="#64748b" />
+            }
           </div>
-          
-   <GlitchText text={ghProfile?.name || "Sudip Kumar Jena"} />
-          
-  <p className="text-lg md:text-xl font-mono text-emerald-400 mb-8 h-8 max-w-2xl mx-auto">
-            {ghProfile?.bio || subtitleText}
+
+          <div style={S.tag}><BarChart2 size={13}/> Open to Data Analyst Roles</div>
+
+          <h1 style={S.h1}>
+            Sudip Kumar <span style={S.accent}>Jena</span>
+          </h1>
+
+          <p style={S.subtitle}>
+            Aspiring Data Analyst turning raw datasets into business decisions —
+            through Python, SQL, and Power BI dashboards that actually tell a story.
           </p>
-          
-  {/* Live GitHub Stats Grid */}
-          {!loading && ghProfile && (
-            <div className="flex gap-6 mb-12 animate-fade-in font-mono text-sm bg-slate-900/50 p-4 rounded-xl border border-slate-800 backdrop-blur-sm">
-              <div className="flex flex-col items-center">
-                <span className="text-slate-400 mb-1 flex items-center gap-1"><BookOpen size={14}/> Repos</span>
-                <span className="text-xl text-white font-bold">{ghProfile.public_repos}</span>
-              </div>
-              <div className="w-px bg-slate-700"></div>
-              <div className="flex flex-col items-center">
-                <span className="text-slate-400 mb-1 flex items-center gap-1"><Users size={14}/> Followers</span>
-                <span className="text-xl text-white font-bold">{ghProfile.followers}</span>
-              </div>
-              <div className="w-px bg-slate-700"></div>
-              <div className="flex flex-col items-center">
-                <span className="text-slate-400 mb-1 flex items-center gap-1"><GitBranch size={14}/> Following</span>
-                <span className="text-xl text-white font-bold">{ghProfile.following}</span>
-              </div>
-            </div>
-          )}
 
-  <InteractiveTerminal />
-        </section>
-
-  {/* Live GitHub Projects Section */}
-        <section id="projects" className="relative">
-          <div className="flex items-center gap-4 mb-12">
-            <h2 className="text-3xl font-bold text-white tracking-tight">System.Repositories</h2>
-            <div className="h-px bg-gradient-to-r from-cyan-500/50 to-transparent flex-1"></div>
-          </div>
-          
-  {loading ? (
-             <div className="flex justify-center items-center py-20 text-cyan-500">
-               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500"></div>
-             </div>
-          ) : ghRepos.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 perspective-1000">
-              {ghRepos.map(repo => (
-                <ProjectCard key={repo.id} repo={repo} />
+          {/* Live stats */}
+          {gh && (
+            <div style={S.statPill} className="fade-up">
+              {[
+                { n: gh.public_repos, l:"Repos" },
+                { n: gh.followers, l:"Followers" },
+                { n: 54966, l:"Records Analysed", k:true },
+              ].map(s => (
+                <div key={s.l} style={S.stat}>
+                  <div style={S.statNum}>
+                    {s.k ? <><Counter end={s.n} />+</> : s.n}
+                  </div>
+                  <div style={S.statLbl}>{s.l}</div>
+                </div>
               ))}
             </div>
-          ) : (
-            <div className="text-center p-12 bg-slate-900/50 border border-slate-800 rounded-xl">
-              <Code size={48} className="mx-auto text-slate-600 mb-4" />
-              <p className="text-slate-400">Loading repositories or no public repositories found.</p>
-            </div>
           )}
-          
-  <div className="mt-16 text-center">
-            <a href="https://github.com/sudipkumarjena?tab=repositories" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-8 py-3 bg-slate-900 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-950 hover:border-cyan-400 rounded-full font-mono transition-all shadow-[0_0_20px_-5px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.6)]">
-              Explore All on GitHub <ChevronRight size={18} />
-            </a>
-          </div>
-        </section>
 
-  {/* Contact Footer */}
-        <section id="contact" className="border-t border-slate-800/50 pt-20 pb-10 flex flex-col items-center text-center relative z-20">
-          <h2 className="text-3xl font-bold text-white mb-6">Open Connection</h2>
-          <p className="text-slate-400 max-w-md mb-8">
-            My inbox is currently open for new opportunities, collaborations, or just a quick chat about tech.
+          <div style={S.btnRow}>
+            <a href={`https://github.com/${GH_USER}`} target="_blank" rel="noreferrer" style={S.btnPrimary}>
+              <Github size={16}/> View GitHub
+            </a>
+            <a href={LI_URL} target="_blank" rel="noreferrer" style={S.btnOutline}>
+              <Linkedin size={16}/> LinkedIn
+            </a>
+            <a href={`mailto:${EMAIL}`} style={S.btnOutline}>
+              <Mail size={16}/> Email Me
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* SKILLS */}
+      <section id="skills" style={{ background:"#060d1c" }}>
+        <div style={S.section}>
+          <div style={S.sectionHead}>
+            <p style={S.sectionLabel}>// capabilities</p>
+            <h2 style={S.sectionTitle}>Tech Stack</h2>
+          </div>
+          <div style={S.filterRow}>
+            {cats.map(c => (
+              <button key={c} onClick={() => setActiveSkillCat(c)} style={S.filterBtn(activeSkillCat === c)}>{c}</button>
+            ))}
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))", gap:"0 48px" }}>
+            {filteredSkills.map((s, i) => (
+              <SkillBar key={s.name} {...s} delay={i * 80} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PROJECTS */}
+      <section id="projects" style={{ background:"#020817" }}>
+        <div style={S.section}>
+          <div style={S.sectionHead}>
+            <p style={S.sectionLabel}>// portfolio</p>
+            <h2 style={S.sectionTitle}>Featured Projects</h2>
+          </div>
+          <div style={S.grid3}>
+            {PROJECTS.map((p, i) => <ProjectCard key={i} p={p} i={i} />)}
+          </div>
+          <div style={{ textAlign:"center", marginTop:40 }}>
+            <a href={`https://github.com/${GH_USER}?tab=repositories`} target="_blank" rel="noreferrer"
+              style={{ ...S.btnOutline, display:"inline-flex" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor="#f59e0b"; e.currentTarget.style.color="#f59e0b"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor="#334155"; e.currentTarget.style.color="#94a3b8"; }}>
+              All Repositories <ChevronRight size={16}/>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* CERTS */}
+      <section id="certs" style={{ background:"#060d1c" }}>
+        <div style={S.section}>
+          <div style={S.sectionHead}>
+            <p style={S.sectionLabel}>// achievements</p>
+            <h2 style={S.sectionTitle}>Certifications</h2>
+          </div>
+          <div style={S.grid2}>
+            {CERTS.map((c, i) => <CertCard key={i} c={c} />)}
+          </div>
+          {/* Hackathon highlight */}
+          <div style={{
+            marginTop:20, background:"#0f172a",
+            border:"1px solid #f59e0b44", borderRadius:12,
+            padding:"20px 24px", display:"flex", alignItems:"center", gap:16,
+            borderLeft:"3px solid #f59e0b",
+          }}>
+            <div style={{ fontSize:32 }}>🏆</div>
+            <div>
+              <p style={{ color:"#f8fafc", fontWeight:600, fontSize:15, marginBottom:4 }}>UpGrad B-5 Squad — Data & AI Hackathon 2026</p>
+              <p style={{ color:"#64748b", fontSize:13 }}>Reached the Pre-Final Round competing with teams from across India in data analytics and AI problem-solving.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT FOOTER */}
+      <div style={S.divider} />
+      <section id="contact" style={{ background:"#020817" }}>
+        <div style={{ ...S.section, textAlign:"center" }}>
+          <p style={S.sectionLabel}>// get in touch</p>
+          <h2 style={{ ...S.sectionTitle, marginBottom:16 }}>Open to Opportunities</h2>
+          <p style={{ color:"#64748b", fontSize:15, maxWidth:480, margin:"0 auto 40px", lineHeight:1.8 }}>
+            Looking for Data Analyst, Business Analyst, or MIS Analyst roles. Let's talk data.
           </p>
-          
-  <div className="flex gap-6 mb-12">
-            <a href="https://github.com/sudipkumarjena" target="_blank" rel="noreferrer" className="p-4 bg-slate-900 rounded-xl text-slate-400 hover:text-white hover:-translate-y-2 hover:bg-slate-800 hover:shadow-[0_10px_20px_rgba(255,255,255,0.05)] transition-all border border-slate-800">
-              <Github size={28} />
-            </a>
-            <a href="#" className="p-4 bg-slate-900 rounded-xl text-slate-400 hover:text-cyan-400 hover:-translate-y-2 hover:bg-slate-800 hover:shadow-[0_10px_20px_rgba(6,182,212,0.1)] transition-all border border-slate-800">
-              <Linkedin size={28} />
-            </a>
-            <a href="mailto:hello@example.com" className="p-4 bg-slate-900 rounded-xl text-slate-400 hover:text-emerald-400 hover:-translate-y-2 hover:bg-slate-800 hover:shadow-[0_10px_20px_rgba(52,211,153,0.1)] transition-all border border-slate-800">
-              <Mail size={28} />
-            </a>
+          <div style={S.socialRow}>
+            {[
+              { href: `https://github.com/${GH_USER}`, icon:<Github size={20}/> },
+              { href: LI_URL, icon:<Linkedin size={20}/> },
+              { href: `mailto:${EMAIL}`, icon:<Mail size={20}/> },
+            ].map((s, i) => (
+              <a key={i} href={s.href} target="_blank" rel="noreferrer"
+                style={S.socialBtn} className="social-icon"
+                onMouseEnter={e => { e.currentTarget.style.color="#f59e0b"; e.currentTarget.style.borderColor="#f59e0b44"; e.currentTarget.style.background="#f59e0b11"; }}
+                onMouseLeave={e => { e.currentTarget.style.color="#64748b"; e.currentTarget.style.borderColor="#1e293b"; e.currentTarget.style.background="#0f172a"; }}>
+                {s.icon}
+              </a>
+            ))}
           </div>
-          
-   <div className="text-slate-600 font-mono text-sm">
-            <p className="flex items-center justify-center gap-2">Built with <span className="text-cyan-600">React</span> & <span className="text-cyan-600">Tailwind</span></p>
-            <p className="mt-2">© {new Date().getFullYear()} Sudip Kumar Jena. All systems normal.</p>
-          </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      <footer style={S.footer}>
+        <p>Built with React · © {new Date().getFullYear()} Sudip Kumar Jena · All systems operational.</p>
+      </footer>
+
+      {/* AI ASSISTANT */}
+      <AITerminal />
     </div>
   );
 }
