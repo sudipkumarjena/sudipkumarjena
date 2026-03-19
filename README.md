@@ -19,9 +19,11 @@
 
 ## 👨‍💻 About
 
-B.Com graduate pivoting into Data Analytics through self-directed learning, hands-on projects, and real-world simulations. I work across the full analyst stack — from cleaning raw data in Python to writing SQL queries to building interactive Power BI dashboards.
+B.Com graduate transitioning into Data Analytics with hands-on experience in Excel,Python, SQL, and Power BI. 
 
-Currently pursuing an Advanced Certificate in Data Science & AI at UpGrad.
+Built end-to-end projects involving data cleaning, analysis, and dashboard creation to solve real-world business problems.
+
+Currently pursuing Data Science & AI (UpGrad).
 
 ```json
 {
