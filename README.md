@@ -121,13 +121,7 @@ Sales analytics across 4 report pages — regional profitability, segment intell
 
 ---
 
-## 🐍 Contribution
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/sudipkumarjena/sudipkumarjena/output/github-contribution-grid-snake-dark.svg" alt="contribution snake"/>
-</p>
-
----
 
 ## 🤝 Connect
 
