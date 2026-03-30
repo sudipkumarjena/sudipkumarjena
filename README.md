@@ -133,18 +133,18 @@ Sales analytics across 4 report pages — regional profitability, segment intell
 
 ---
 
+
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=sudipkumarjena&theme=darkhub&no-frame=true&no-bg=true&margin-w=6&column=6" alt="trophies"/>
+  <img src="https://github-profile-trophy.vercel.app/?username=sudipkumarjena&theme=darkhub&no-frame=true&no-bg=true&margin-w=6&column=6&rank=SECRET,SSS,SS,S,AAA,AA,A,B,C" alt="trophies"/>
 </p>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=sudipkumarjena&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=64a0c8&icon_color=64a0c8&text_color=8b949e&include_all_commits=true" height="150" alt="GitHub Stats"/>
+  <img src="https://github-readme-stats.vercel.app/api?username=sudipkumarjena&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=64a0c8&icon_color=64a0c8&text_color=8b949e&include_all_commits=true&count_private=true" height="150" alt="GitHub Stats"/>
   &nbsp;
   <img src="https://streak-stats.demolab.com?user=sudipkumarjena&theme=github-dark-blue&hide_border=true&background=0d1117&ring=64a0c8&fire=64a0c8&currStreakLabel=64a0c8" height="150" alt="GitHub Streak"/>
 </p>
-
 ---
 
 ## 🐍 Contribution
